@@ -20,7 +20,7 @@ class Billboard < Sinatra::Base
       if ENV['MONGOLAB_URI']
         uri  = URI.parse(ENV['MONGOLAB_URI']).to_s
         conn = Mongo::Connection.from_uri(uri)
-        db   = conn.db['heroku_app4989206']
+        db   = conn['heroku_app4989206']
       else
         conn = Mongo::Connection.new
         db   = conn['billboard']
