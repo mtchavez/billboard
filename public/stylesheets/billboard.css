@@ -4,3 +4,22 @@ body #main { margin-top: 60px; }
   padding: 35px 0 36px;
   border-top: 1px solid #E5E5E5;
 }
+
+.green { color: #5BB75B; }
+.red   { color: #DA4F49; }
+
+.up {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url("../images/up.png");
+  background-repeat: no-repeat;
+}
+
+.down {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url("../images/down.png");
+  background-repeat: no-repeat;
+}

@@ -1,1 +1,48 @@
-%h1 HAML INDEX
+.hero-unit
+  %h1 Hot 100
+  %p Billboard's Hot 100 1959 - Present Day
+
+- @hot100.find({}, sort: [['_id', -1]], timeout: false) do |cursor|
+  - cursor.each_with_index do |doc, index|
+    - week = doc.keys.last
+    %h2= week
+    %table.table.table-striped
+      %thead
+        %td
+          %b Pos
+        %td
+          %b Prev
+        %td
+          %b Peak
+        %td
+          %b Weeks on Chart
+        %td
+          %b Artist
+        %td
+          %b Song
+        %td
+          &nbsp;
+
+      %tbody
+        - doc[week].each do |entry|
+          %tr
+            %td
+              - if entry['previous_week'] == entry['position']
+                = entry['position']
+              - elsif entry['position'] < entry['previous_week']
+                .green
+                  = entry['position']
+                  .up &nbsp;
+              - else
+                .red
+                  = entry['position']
+                  .down &nbsp;
+                
+            %td= entry['previous_week']
+            %td= entry['peak_position']
+            %td= entry['weeks_on_chart']
+            %td= entry['artist']
+            %td= entry['song']
+            %td
+              %a{ href: entry['play_link'], target: '_blank' }
+                %i.icon-play

@@ -14,7 +14,25 @@ class Billboard < Sinatra::Base
     enable :logging, :raise_errors, :dump_errors
   end
 
+  module MongoHelper
+
+    def mongo
+      if ENV['MONGOLAB_URI']
+        uri  = URI.parse(ENV['MONGOLAB_URI'])
+        conn = Mongo::Connection.from_uri(uri)
+        db   = conn.db(uri.path.gsub(/^\//, ''))
+      else
+        conn = Mongo::Connection.new
+        db   = conn['billboard']
+      end
+    end
+
+  end
+
+  helpers MongoHelper
+
   get '/' do
+    @hot100 = mongo['hot100']
     haml :billboard
   end
 
